@@ -277,6 +277,8 @@ $(function() {
         latlng: row.gsx$latlng.$t
       });
     }
+    $('.loader').hide();
+    $('#' + mapCanvasID).show();
     initializeMap(mapData);
   });
 });
