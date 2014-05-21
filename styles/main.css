@@ -35,7 +35,7 @@
 }
 .contentWindow .key-points {
   float: right;
-  width: 150px;
+  min-width: 150px;
   background: #efefef;
   padding: 8px 9px;
   margin: 0 0 10px 20px;
