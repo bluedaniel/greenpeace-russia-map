@@ -137,7 +137,7 @@ var mapStyle = [
 ];
 
 function sidebarUnhighlight() {
-    $('ul#locations li').removeClass('enabled');
+    $('ul.locations li').removeClass('enabled');
 }
 
 function addMarker(marker, content) {
@@ -149,7 +149,7 @@ function addMarker(marker, content) {
         map.setCenter(marker.getPosition());
 
         sidebarUnhighlight();
-        $('ul#locations li a[data-id="' + this.sidebarID + '"]').parent().addClass('enabled');
+        $('ul.locations li a[data-id="' + this.sidebarID + '"]').parent().addClass('enabled');
 
     });
     return true;
@@ -254,7 +254,7 @@ function initializeMap(mapData) {
             bounds.extend(markerPosition);
         }
 
-        $('ul#locations').append('<li><a href="#" data-id="' + i + '">' + item.project + '</a></li>');
+        $('ul.locations').append('<li><a href="#" data-id="' + i + '">' + item.project + '</a></li>');
 
     } // End of forEach markers
 
@@ -280,7 +280,7 @@ window.onresize = function () {
 
 $(function () {
 
-    $('ul#locations').on('click', 'li a', function () {
+    $('ul.locations').on('click', 'li a', function () {
         sidebarUnhighlight();
         var markerID = $(this).data('id');
         google.maps.event.trigger(markers[markerID], 'click');
