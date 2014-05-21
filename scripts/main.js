@@ -100,7 +100,7 @@ function sidebarUnhighlight() {
 
 function addMarker(marker, content) {
   google.maps.event.addListener(marker, 'click', function() {
-    infoWindow.setContent('<div id="contentWindow">' +
+    infoWindow.setContent('<div class="contentWindow">' +
       content.join('') + '</div>');
     infoWindow.open(map, marker);
 
