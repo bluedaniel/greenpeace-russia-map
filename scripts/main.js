@@ -6,7 +6,6 @@
 var mapCanvasID = 'greenpeace-russia-map-canvas',
   googleDoc = '1uPTOGIHvRRNZ7JMyeD6dTNsXsORbMcuNmKx1LcP6hnM',
   staticUrl = 'http://energydesk.s3.amazonaws.com/russia-oil-map',
-  preData = '<div class="loader"></div><ul class="locations"></ul>',
   bounds,
   mapOptions,
   map,
@@ -262,9 +261,20 @@ function loadScript() {
 
   var bigContainer = $('.greenpeace-russia-map-canvas-container');
 
+  var preData = '<div class="loader"></div>';
+  preData += '<ul class="locations"></ul>';
+  preData += '<div id="greenpeace-russia-map-canvas"></div>';
+
   bigContainer.css({
     height: bigContainer.data('height')
   }).prepend(preData);
+
+  if(bigContainer.data('height') === '100%') {
+    bigContainer.css({
+      position: 'absolute'
+    });
+  }
+
   $('#' + mapCanvasID).addClass('greenpeace-russia-map-canvas');
 
   var script = document.createElement('script');
