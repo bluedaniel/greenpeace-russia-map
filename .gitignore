@@ -1,2 +1,6 @@
 
 .s3cfg
+
+deploy.sh
+
+s3.exclude
