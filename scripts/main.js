@@ -6,6 +6,7 @@
 var mapCanvasID = 'greenpeace-russia-map-canvas',
   googleDoc = '1uPTOGIHvRRNZ7JMyeD6dTNsXsORbMcuNmKx1LcP6hnM',
   staticUrl = 'http://energydesk.s3.amazonaws.com/russia-oil-map',
+  preData = '<div class="loader"></div><ul class="locations"></ul>',
   bounds,
   mapOptions,
   map,
@@ -226,6 +227,14 @@ function initializeMap(mapData) {
 
   } // End of forEach markers
 
+  $('ul.locations').on('click', 'li a', function() {
+    sidebarUnhighlight();
+    var markerID = $(this).data('id');
+    google.maps.event.trigger(markers[markerID], 'click');
+    $(this).parent().addClass('enabled');
+    return false;
+  });
+
   google.maps.event.addListenerOnce(map, 'idle', function() {
     offsetCenter();
     // change
@@ -250,6 +259,10 @@ window.onresize = function() {
 
 
 function loadScript() {
+
+  $('.greenpeace-russia-map-canvas-container').prepend(preData);
+  $('#' + mapCanvasID).addClass('greenpeace-russia-map-canvas');
+
   var script = document.createElement('script');
   script.type = 'text/javascript';
   script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&' +
@@ -295,13 +308,3 @@ function initializeSpreadsheet() {
     initializeMap(mapData);
   });
 }
-
-$(function() {
-  $('ul.locations').on('click', 'li a', function() {
-    sidebarUnhighlight();
-    var markerID = $(this).data('id');
-    google.maps.event.trigger(markers[markerID], 'click');
-    $(this).parent().addClass('enabled');
-    return false;
-  });
-});
