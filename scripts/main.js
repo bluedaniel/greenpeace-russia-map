@@ -1,4 +1,4 @@
-/* jshint undef: true, unused: true */
+/* jshint undef: true, unused: false */
 /* global google */
 
 'use strict';
