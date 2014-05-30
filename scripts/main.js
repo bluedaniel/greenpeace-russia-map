@@ -9,13 +9,8 @@ var mapCanvasID = 'greenpeace-russia-map-canvas',
   mapOptions,
   map,
   infoWindow,
+  overlayHelper,
   markers = [];
-
-var overlayHelper = new google.maps.OverlayView();
-overlayHelper.onAdd = function() {};
-overlayHelper.onRemove = function() {};
-overlayHelper.draw = function() {};
-
 
 var mapStyle = [{
   'featureType': 'landscape',
@@ -245,16 +240,22 @@ window.onresize = function() {
 };
 
 
-$(function() {
+function loadScript() {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&' +
+      'callback=initializeSpreadsheet';
+  document.body.appendChild(script);
+}
 
-  $('ul.locations').on('click', 'li a', function() {
-    sidebarUnhighlight();
-    var markerID = $(this).data('id');
-    google.maps.event.trigger(markers[markerID], 'click');
-    $(this).parent().addClass('enabled');
-    return false;
-  });
+window.onload = loadScript;
 
+function initializeSpreadsheet() {
+
+  overlayHelper = new google.maps.OverlayView();
+  overlayHelper.onAdd = function() {};
+  overlayHelper.onRemove = function() {};
+  overlayHelper.draw = function() {};
 
   var rUrl = 'https://spreadsheets.google.com/feeds/list/';
   rUrl += googleDoc;
@@ -280,5 +281,15 @@ $(function() {
     $('.loader').hide();
     $('#' + mapCanvasID).show();
     initializeMap(mapData);
+  });
+}
+
+$(function() {
+  $('ul.locations').on('click', 'li a', function() {
+    sidebarUnhighlight();
+    var markerID = $(this).data('id');
+    google.maps.event.trigger(markers[markerID], 'click');
+    $(this).parent().addClass('enabled');
+    return false;
   });
 });
