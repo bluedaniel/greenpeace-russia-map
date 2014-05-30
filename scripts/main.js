@@ -5,6 +5,7 @@
 
 var mapCanvasID = 'greenpeace-russia-map-canvas',
   googleDoc = '1uPTOGIHvRRNZ7JMyeD6dTNsXsORbMcuNmKx1LcP6hnM',
+  staticUrl = 'http://energydesk.s3.amazonaws.com/russia-oil-map',
   bounds,
   mapOptions,
   map,
@@ -90,12 +91,15 @@ var mapStyle = [{
 }];
 
 function sidebarUnhighlight() {
+  $('ul.locations').css({
+    'z-index': '0'
+  });
   $('ul.locations li').removeClass('enabled');
 }
 
 function addMarker(marker, content) {
   google.maps.event.addListener(marker, 'click', function() {
-    infoWindow.setContent('<div class="contentWindow">' +
+    infoWindow.setContent('<div class="contentwindow">' +
       content.join('') + '</div>');
     infoWindow.open(map, marker);
 
@@ -156,7 +160,9 @@ function initializeMap(mapData) {
   map = new google.maps.Map(document.getElementById(mapCanvasID), mapOptions);
   overlayHelper.setMap(map);
 
-  infoWindow = new google.maps.InfoWindow();
+  infoWindow = new google.maps.InfoWindow({
+    zIndex: 500
+  });
 
   for (var i = 0; i < mapData.length; i++) {
     var item = mapData[i];
@@ -171,14 +177,14 @@ function initializeMap(mapData) {
       var markerPosition = new google.maps.LatLng(location[0], location[1]);
 
       var icons = {
-        oilplanned: 'images/oil-planned.png',
-        oiloperational: 'images/oil-operational.png',
-        gasplanned: 'images/gas-planned.png',
-        gasoperational: 'images/gas-operational.png',
-        gasoiloperational: 'images/gas-oil-operational.png',
-        oilgasoperational: 'images/gas-oil-operational.png',
-        gasoilplanned: 'images/gas-oil-planned.png',
-        oilgasplanned: 'images/gas-oil-planned.png'
+        oilplanned: staticUrl + '/images/oil-planned.png',
+        oiloperational: staticUrl + '/images/oil-operational.png',
+        gasplanned: staticUrl + '/images/gas-planned.png',
+        gasoperational: staticUrl + '/images/gas-operational.png',
+        gasoiloperational: staticUrl + '/images/gas-oil-operational.png',
+        oilgasoperational: staticUrl + '/images/gas-oil-operational.png',
+        gasoilplanned: staticUrl + '/images/gas-oil-planned.png',
+        oilgasplanned: staticUrl + '/images/gas-oil-planned.png'
       };
       var markerIconUrl = icons[$.trim(item.icon).replace(/ /g, '')];
 
@@ -230,6 +236,9 @@ function initializeMap(mapData) {
     // Zoom out on infoWindow close
     offsetCenter();
     sidebarUnhighlight();
+    $('ul.locations').css({
+      'z-index': ''
+    });
   });
 }
 
@@ -244,8 +253,11 @@ function loadScript() {
   var script = document.createElement('script');
   script.type = 'text/javascript';
   script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&' +
-      'callback=initializeSpreadsheet';
+    'callback=initializeSpreadsheet';
   document.body.appendChild(script);
+
+  $('head').append($('<link rel="stylesheet" type="text/css" />')
+    .attr('href', staticUrl + '/styles/main.min.css'));
 }
 
 window.onload = loadScript;
