@@ -260,7 +260,11 @@ window.onresize = function() {
 
 function loadScript() {
 
-  $('.greenpeace-russia-map-canvas-container').prepend(preData);
+  var bigContainer = $('.greenpeace-russia-map-canvas-container');
+
+  bigContainer.css({
+    height: bigContainer.data('height')
+  }).prepend(preData);
   $('#' + mapCanvasID).addClass('greenpeace-russia-map-canvas');
 
   var script = document.createElement('script');
