@@ -4,6 +4,8 @@ Simple Google map showing locations of oil fields.
 
 **[Fullscreen demo](http://energydesk.s3.amazonaws.com/russia-oil-map/index.html)**
 
+**[Live article embed demo](http://www.greenpeace.org.uk/newsdesk/energy/analysis/which-western-energy-giants-are-most-exposed-risk-their-investments-russia)**
+
 ###Usage
 
 Include the script hosted on Amazon S3
